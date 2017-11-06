@@ -54,7 +54,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                 registerUser();
             }
         });
-        /*lin.setOnClickListener(new View.OnClickListener()
+        lin.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -62,7 +62,7 @@ public class signup extends AppCompatActivity implements View.OnClickListener
                 Intent it = new Intent(signup.this,login.class);
                 startActivity(it);
             }
-        });*/
+        });
 
 
 
@@ -100,7 +100,11 @@ public class signup extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"User Register Succesfull",Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(getApplicationContext(),"User Register Succesfull",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(signup.this,login.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
                 else {
                     if(task.getException() instanceof FirebaseAuthUserCollisionException){
                         Toast.makeText(getApplicationContext(),"You are already registerd",Toast.LENGTH_SHORT).show();

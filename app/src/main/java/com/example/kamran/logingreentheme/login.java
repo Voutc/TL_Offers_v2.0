@@ -2,31 +2,42 @@ package com.example.kamran.logingreentheme;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class login extends AppCompatActivity
 {
-    EditText pswd,usrusr;
-    TextView sup,lin;
+    EditText pswd,mail;
+    TextView sup;
+    Button lin;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        lin = (TextView) findViewById(R.id.lin);
-        usrusr = (EditText) findViewById(R.id.usrusr);
+        mAuth=FirebaseAuth.getInstance();
+        lin = (Button) findViewById(R.id.lin);
+        mail = (EditText) findViewById(R.id.mail);
         pswd = (EditText) findViewById(R.id.pswrdd);
         sup = (TextView) findViewById(R.id.sup);
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/LatoLight.ttf");
         Typeface custom_font1 = Typeface.createFromAsset(getAssets(), "fonts/LatoRegular.ttf");
         lin.setTypeface(custom_font1);
         sup.setTypeface(custom_font);
-        usrusr.setTypeface(custom_font);
+        mail.setTypeface(custom_font);
         pswd.setTypeface(custom_font);
         sup.setOnClickListener(new View.OnClickListener()
         {
@@ -37,5 +48,58 @@ public class login extends AppCompatActivity
                 startActivity(it);
             }
         });
+        lin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userLogin();
+            }
+        });
     }
+
+    private void userLogin()
+    {
+        String email = mail.getText().toString().trim();
+        String password = pswd.getText().toString().trim();
+
+        if(email.isEmpty())
+        {
+            mail.setError("Email is required");
+            mail.requestFocus();
+            return;
+        }
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            mail.setError("Invaild Email");
+            mail.requestFocus();
+            return;
+        }
+
+        if(password.isEmpty())
+        {
+            pswd.setError("Password is required");
+            pswd.requestFocus();
+            return;
+        }
+        if(password.length()<5){
+            pswd.setError("Minimum length of password is 5 numbers");
+            pswd.requestFocus();
+            return;
+        }
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful())
+                {
+                    Intent intent = new Intent(login.this,listofshops.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 }
