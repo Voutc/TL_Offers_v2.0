@@ -21,7 +21,7 @@ public class login extends AppCompatActivity
 {
     EditText pswd,mail;
     TextView sup;
-    Button lin;
+    Button lin,shoplog;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +29,7 @@ public class login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
+        shoplog = (Button) findViewById(R.id.shoplog);
         lin = (Button) findViewById(R.id.lin);
         mail = (EditText) findViewById(R.id.mail);
         pswd = (EditText) findViewById(R.id.pswrdd);
@@ -54,7 +55,15 @@ public class login extends AppCompatActivity
                 userLogin();
             }
         });
+        shoplog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sl = new Intent(login.this,activity_shoplogin.class);
+                startActivity(sl);
+            }
+        });
     }
+
 
     private void userLogin()
     {
