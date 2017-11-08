@@ -10,12 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class activity_shoplogin extends AppCompatActivity {
-    Button shoplogs;
+    Button shoplogs,lin;
     TextView supp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shoplogin);
+        lin = (Button) findViewById(R.id.lin);
         shoplogs = (Button) findViewById(R.id.shoplogs);
         shoplogs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,5 +33,12 @@ public class activity_shoplogin extends AppCompatActivity {
                 startActivity(bc);
             }
         });
+       lin.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent cp = new Intent(activity_shoplogin.this,controlpanelshop.class);
+               startActivity(cp);
+           }
+       });
     }
 }
