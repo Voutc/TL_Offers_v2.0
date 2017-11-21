@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grdnt"
+    tools:context="com.example.kamran.logingreentheme.search">
+
+    <TextView
+        android:id="@+id/titlos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Επιλέξτε Κατηγορία"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <SeekBar
+        android:id="@+id/apostasi"
+        style="@android:style/Widget.DeviceDefault.Light.SeekBar"
+        android:layout_width="298dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="20dp"
+        android:max="10"
+        android:progress="1"
+        app:layout_constraintTop_toBottomOf="@+id/titlos"
+        tools:layout_editor_absoluteX="43dp" />
+
+    <Switch
+        android:id="@+id/idopioish"
+        android:layout_width="302dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:text="Ειδοποίηση για προσφορές κοντά μου. "
+        android:textColor="@android:color/background_light"
+        app:layout_constraintTop_toBottomOf="@+id/chooseoption"
+        tools:layout_editor_absoluteX="41dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="115dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="48dp"
+        android:text="Pizza"
+
+        android:textColor="@android:color/background_light"
+        app:layout_constraintTop_toBottomOf="@+id/idopioish"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="116dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="8dp"
+        android:text="Burger"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox1"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="117dp"
+        android:layout_height="35dp"
+        android:text="Σουβλακια"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="116dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="108dp"
+        android:text="Κρέπες"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/chooseoption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Επιλογή Κατηγορίας"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_editor_absoluteX="108dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="187dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:text="Άνοιγμα στο χάρτη"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        tools:layout_editor_absoluteY="531dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="133dp"
+        android:layout_height="45dp"
+        android:text="Εύρεση"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="531dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Απόσταση σε μέτρα"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintTop_toBottomOf="@+id/apostasi"
+        tools:layout_editor_absoluteX="43dp" />
+
+</android.support.constraint.ConstraintLayout>
+

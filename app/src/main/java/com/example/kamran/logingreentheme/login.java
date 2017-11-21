@@ -72,25 +72,25 @@ public class login extends AppCompatActivity
 
         if(email.isEmpty())
         {
-            mail.setError("Email is required");
+            mail.setError("Πληκτρολογήστε Email");
             mail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            mail.setError("Invaild Email");
+            mail.setError("Λάθος μορφή Email");
             mail.requestFocus();
             return;
         }
 
         if(password.isEmpty())
         {
-            pswd.setError("Password is required");
+            pswd.setError("Πληκτρολογήστε Κωδικό");
             pswd.requestFocus();
             return;
         }
         if(password.length()<5){
-            pswd.setError("Minimum length of password is 5 numbers");
+            pswd.setError("Κατώτατος αριθμός κωδικού 5 χρκ.");
             pswd.requestFocus();
             return;
         }
@@ -99,7 +99,7 @@ public class login extends AppCompatActivity
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    Intent intent = new Intent(login.this,listofshops.class);
+                    Intent intent = new Intent(login.this,search.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }

@@ -18,7 +18,8 @@
         <activity android:name=".signup" />
         <activity android:name=".activity_shoplogin" />
         <activity android:name=".listofshops" />
-        <activity android:name=".controlpanelshop"></activity>
+        <activity android:name=".controlpanelshop" />
+        <activity android:name=".search"></activity>
     </application>
 
 </manifest>

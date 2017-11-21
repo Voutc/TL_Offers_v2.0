@@ -74,25 +74,25 @@ public class signup extends AppCompatActivity implements View.OnClickListener
 
         if(email.isEmpty())
         {
-            mail.setError("Email is required");
+            mail.setError("Πληκτρολογήστε Email");
             mail.requestFocus();
             return;
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            mail.setError("Invaild Email");
+            mail.setError("Λάθος μορφή Email");
             mail.requestFocus();
             return;
         }
 
         if(password.isEmpty())
         {
-            pswd.setError("Password is required");
+            pswd.setError("Πληκτρολογήστε Κωδικό");
             pswd.requestFocus();
             return;
         }
         if(password.length()<5){
-            pswd.setError("Minimum length of password is 5 numbers");
+            pswd.setError("Κατώτατος αριθμός κωδικού 5 χρκ.");
             pswd.requestFocus();
             return;
         }
@@ -100,14 +100,14 @@ public class signup extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"User Register Succesfull",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Επιτυχής Εγγραφή",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(signup.this,login.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
                 else {
                     if(task.getException() instanceof FirebaseAuthUserCollisionException){
-                        Toast.makeText(getApplicationContext(),"You are already registerd",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Έχετε ήδη εγγραφεί",Toast.LENGTH_SHORT).show();
 
                     }
                     else{
