@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TL_Offers_Finder</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
