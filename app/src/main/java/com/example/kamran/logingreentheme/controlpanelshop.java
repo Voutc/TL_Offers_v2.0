@@ -27,7 +27,7 @@ public class controlpanelshop extends AppCompatActivity {
     TextView locationText,shopnameText;
     Spinner categorySpnner;
     EditText numberText;
-    Button saveBtn;
+    Button saveBtn,makediscbtn;
 
     DatabaseReference databaseShops;
     @Override
@@ -40,11 +40,20 @@ public class controlpanelshop extends AppCompatActivity {
         numberText = (EditText) findViewById(R.id.number);
         saveBtn = (Button) findViewById(R.id.save);
         locationText = (TextView) findViewById(R.id.location);
-
+        makediscbtn = (Button) findViewById(R.id.makedisc);
+        makediscbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent disc1 = new Intent(controlpanelshop.this,Discount.class);
+                startActivity(disc1);
+            }
+        });
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addShopName();
+                Intent disc = new Intent(controlpanelshop.this,Discount.class);
+                startActivity(disc);
             }
         });
         locationText.setOnClickListener(new View.OnClickListener() {

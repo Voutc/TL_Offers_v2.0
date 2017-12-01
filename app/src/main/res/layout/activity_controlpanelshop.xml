@@ -166,6 +166,19 @@
         android:paddingRight="60dp">
 
         <Button
+            android:id="@+id/makedisc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#ff0066"
+            android:gravity="center"
+            android:letterSpacing="0.2"
+            android:padding="8dp"
+            android:text="Δημιουργία Προσφοράς"
+            android:textColor="#d9e5f3"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
