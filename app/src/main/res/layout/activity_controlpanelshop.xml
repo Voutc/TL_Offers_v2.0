@@ -77,19 +77,20 @@
                     android:layout_height="20dp"
                     android:src="@drawable/category"
                     android:layout_gravity="center"/>
-                <EditText
-                    android:id="@+id/ctgory"
+
+                <Spinner
+                    android:id="@+id/category"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Κατηγορία"
-                    android:textColorHint="#d9e5f3"
+                    android:layout_height="29dp"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
-                    android:letterSpacing="0.1"
-                    android:textSize="16dp"
+                    android:entries="@array/categories"
+                    android:hint="Κατηγορία"
                     android:inputType="text"
-                    android:textColor="#fff"
-                    />
+                    android:letterSpacing="0.1"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#d9e5f3"
+                    android:textSize="16dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,7 +168,7 @@
         <Button
             android:id="@+id/save"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#0066ff"
             android:gravity="center"
