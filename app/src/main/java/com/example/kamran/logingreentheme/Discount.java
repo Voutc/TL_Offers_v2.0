@@ -50,9 +50,10 @@ public class Discount extends AppCompatActivity {
         picturebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inten = new Intent(Intent.ACTION_PICK);
-                inten.setType("image/*");
-                startActivityForResult(inten,GALLERY_INTENT);
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,GALLERY_INTENT);
             }
         });
         publishbtn.setOnClickListener(new View.OnClickListener() {
@@ -83,17 +84,23 @@ public class Discount extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALLERY_INTENT && requestCode == RESULT_OK){
+        Uri uri = null;
+        if(requestCode == GALLERY_INTENT){
             mProgressDialog.setMessage("Uploading ...");
             mProgressDialog.show();
-            Uri uri = data.getData();
+            uri = data.getData();
             StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(Discount.this,"Upload Done", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Discount.this,"Επιτυχής καταχώρηση προϊόντος!", Toast.LENGTH_LONG).show();
                     mProgressDialog.dismiss();
 
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Discount.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
                 }
             });
         }
