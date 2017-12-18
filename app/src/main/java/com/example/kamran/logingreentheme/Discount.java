@@ -22,7 +22,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class Discount extends AppCompatActivity {
-    EditText productnametxt,pricetxt,discounttxt,infotxt;
+    EditText productnametxt, pricetxt, discounttxt, infotxt;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     Button publishbtn;
@@ -32,6 +32,11 @@ public class Discount extends AppCompatActivity {
     private StorageReference mStorage;
     private static final int GALLERY_INTENT = 2;
     private ProgressDialog mProgressDialog;
+    int MaxUploadTime = 40000;
+    Uri uri;
+    UploadTask uploadTask;
+    String link;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,67 +47,77 @@ public class Discount extends AppCompatActivity {
         discounttxt = (EditText) findViewById(R.id.discount);
         infotxt = (EditText) findViewById(R.id.info);
         publishbtn = (Button) findViewById(R.id.publish);
-        mStorage = FirebaseStorage.getInstance().getReference();
         picturebtn = (Button) findViewById(R.id.pictureupl);
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReferenceFromUrl("https://tloffersfinder.firebaseio.com/Discount");
+
+        mStorage = FirebaseStorage.getInstance().getReference();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReferenceFromUrl("https://tloffersfinder.firebaseio.com/Discount");
         picturepr = (ImageView) findViewById(R.id.picproduct);
+
         picturebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent,GALLERY_INTENT);
+                startActivityForResult(intent, GALLERY_INTENT);
             }
         });
         publishbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adddiscount();
-
+                addPhoto();
             }
         });
-
     }
-    private void adddiscount(){
+
+    private void adddiscount() {
         String productname = productnametxt.getText().toString().trim();
         String price = pricetxt.getText().toString().trim();
         String discount = discounttxt.getText().toString().trim();
         String descript = infotxt.getText().toString().trim();
-        if(!TextUtils.isEmpty(productname)){
-            String id = databaseReference.push().getKey();
-            Shops shops = new Shops(id,productname,price,discount,descript);
+        mProgressDialog.setMessage("Uploading ...");
+        mProgressDialog.show();
 
-            databaseReference.child(id).setValue(shops);
-            Toast.makeText(this,"Επιτυχής εγγραφή προσφοράς",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this,"Πληκτρολογήστε όνομα προσφοράς!",Toast.LENGTH_LONG).show();
+        if (!TextUtils.isEmpty(productname)) {
+            String id = databaseReference.push().getKey();
+            DiscountDB discountDB = new DiscountDB(id, productname, price, discount, descript, link,id);
+
+            databaseReference.child(id).setValue(discountDB);
+            Toast.makeText(this, "Επιτυχής εγγραφή προσφοράς", Toast.LENGTH_LONG).show();
+            mProgressDialog.dismiss();
+        } else {
+            Toast.makeText(this, "Πληκτρολογήστε όνομα προσφοράς!", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = null;
-        if(requestCode == GALLERY_INTENT){
-            mProgressDialog.setMessage("Uploading ...");
-            mProgressDialog.show();
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
             uri = data.getData();
-            StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(Discount.this,"Επιτυχής καταχώρηση προϊόντος!", Toast.LENGTH_LONG).show();
-                    mProgressDialog.dismiss();
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Discount.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
-                }
-            });
         }
+    }
+
+    private void addPhoto() {
+        StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
+
+        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                link = downloadUrl.toString();
+
+                adddiscount();
+
+                Toast.makeText(Discount.this, "Επιτυχής καταχώρηση προϊόντος!", Toast.LENGTH_LONG).show();
+                mProgressDialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Discount.this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
