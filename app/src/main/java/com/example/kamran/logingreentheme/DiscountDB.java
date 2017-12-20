@@ -13,6 +13,9 @@ public class DiscountDB {
     private String photopath;
     private String idshop;
 
+    public DiscountDB(){
+
+    }
 
 
     public DiscountDB(String idoffer,String productname,String price,String discount,String description,String photopath,String idshop){

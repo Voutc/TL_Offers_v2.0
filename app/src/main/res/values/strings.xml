@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">TL_Offers_Finder</string>
+    <string name="app_name">Offers Finder v0.1</string>
     <string name="title_activity_maps">Map</string>
+    <string name="movie_name_hint">Enter an Offer</string>
     <array name="categories">
         <item>Fast Food</item>
         <item>Coffee</item>
